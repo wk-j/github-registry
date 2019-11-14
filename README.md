@@ -26,6 +26,8 @@ dotnet nuget push \
     .publish/MyConsole.19.11.14.1245.nupkg
 
 cat ~/.config/NuGet/NuGet.Config
+
+curl -vX PUT -u wk-j:$GITHUB_TOKEN -F package=@(find . -name "MyConsole*.nupkg") https://nuget.pkg.github.com/wk-j
 ```
 
 ## Issues
