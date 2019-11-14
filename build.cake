@@ -4,7 +4,7 @@
 using PS = StartProcess.Processor;
 using ProjectParser;
 
-var nugetToken = EnvironmentVariable("npi");
+var nugetToken = EnvironmentVariable("GITHUB_TOKEN");
 var name = "MyConsole";
 
 var currentDir = new DirectoryInfo(".").FullName;
@@ -29,18 +29,12 @@ Task("Publish-NuGet")
         var nupkg = new DirectoryInfo(publishDir).GetFiles("*.nupkg").LastOrDefault();
         var package = nupkg.FullName;
         NuGetPush(package, new NuGetPushSettings {
-            Source = "https://www.nuget.org/api/v2/package",
+            // Source = "https://www.nuget.org/api/v2/package",
+            Source = "https://nuget.pkg.github.com/wk-j/index.json",
             ApiKey = nugetToken
         });
 });
 
-Task("Install")
-    .IsDependentOn("Pack")
-    .Does(() => {
-        var home = Environment.GetFolderPath(Environment.SpecialFolder.UserProfile);
-        PS.StartProcess($"dotnet tool uninstall -g {info.PackageId}");
-        PS.StartProcess($"dotnet tool install   -g {info.PackageId}  --add-source {currentDir}/{publishDir} --version {version}");
-    });
 
 var target = Argument("target", "Pack");
 RunTarget(target);
