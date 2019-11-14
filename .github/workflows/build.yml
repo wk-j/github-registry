@@ -1,4 +1,4 @@
-name: Build & Publish nuget package
+name: Build
 
 on:
   push:
@@ -19,7 +19,7 @@ jobs:
       - name: Build with dotnet
         run: |
           dotnet tool install -g cake.tool
-          dotnet cake -target=Pack
+          ~/.dotnet/tools/dotnet-cake -target=Pack
 
       - name: Setup nuget config
         run: sed 's/GITHUB_TOKEN/${{ secrets.GITHUB_TOKEN }}/g' .nuget.config > nuget.config

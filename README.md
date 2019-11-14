@@ -1,5 +1,7 @@
 ## Registry
 
+[![Actions](https://github.com/wk-j/github-registry/workflows/Build/badge.svg)](https://github.com/wk-j/github-registry/actions)
+
 ```
 nuget source Remove -Name wk-j
 nuget source Remove -Name GitHub
@@ -26,7 +28,7 @@ dotnet nuget push \
 cat ~/.config/NuGet/NuGet.Config
 ```
 
-## Resource
+## Issues
 
 - https://github.community/t5/GitHub-API-Development-and/github-package-registry-not-compatible-with-dotnet-nuget-client/td-p/34776
 - https://github.com/NuGet/Home/issues/8580
