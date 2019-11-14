@@ -52,8 +52,5 @@ jobs:
       - name: Add GPR Source using nuget.exe
         run: nuget sources add -name "GPR" -Source https://nuget.pkg.github.com/wk-j/index.json -Username wk-j -Password ${{ secrets.GITHUB_TOKEN }}
 
-      - name: dotnet build
-        run: dotnet build
-
       - name: nuget push
         run: nuget push .publish/*.nupkg -source "GPR" -SkipDuplicate
