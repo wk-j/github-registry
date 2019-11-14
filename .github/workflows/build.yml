@@ -53,4 +53,4 @@ jobs:
         run: nuget sources add -name "GPR" -Source https://nuget.pkg.github.com/wk-j/index.json -Username wk-j -Password ${{ secrets.GITHUB_TOKEN }}
 
       - name: nuget push
-        run: nuget push .publish/*.nupkg -source "GPR" -SkipDuplicate
+        run: nuget push .publish/**/*.nupkg -source "GPR" -SkipDuplicate
