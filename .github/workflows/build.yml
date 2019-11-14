@@ -21,8 +21,39 @@ jobs:
           dotnet tool install -g cake.tool
           ~/.dotnet/tools/dotnet-cake -target=Pack
 
-      - name: Setup nuget config
-        run: sed 's/GITHUB_TOKEN/${{ secrets.GITHUB_TOKEN }}/g' .nuget.config > nuget.config
+      # - name: Setup nuget config
+      #   run: sed 's/GITHUB_TOKEN/${{ secrets.GITHUB_TOKEN }}/g' .nuget.config > nuget.config
 
-      - name: Publish nuget
-        run: dotnet nuget push .publish/*.nupkg -s "github"
+      # - name: Publish nuget
+      #   run: dotnet nuget push .publish/*.nupkg -s "github"
+
+      - name: Upload math result for job 1
+        uses: actions/upload-artifact@v1
+        with:
+          name: nupkg
+          path: .publish
+
+  publish:
+    runs-on: windows-latest
+    needs: build
+
+    steps:
+      - uses: actions/checkout@v1
+
+      - name: Download math result for job 1
+        uses: actions/download-artifact@v1
+        with:
+          name: nupkg
+          path: .publish
+
+      - name: Setup Nuget.exe
+        uses: warrenbuckley/Setup-Nuget@v1
+
+      - name: Add GPR Source using nuget.exe
+        run: nuget sources add -name "GPR" -Source https://nuget.pkg.github.com/wk-j/index.json -Username wk-j -Password ${{ secrets.GITHUB_TOKEN }}
+
+      - name: dotnet build
+        run: dotnet build
+
+      - name: nuget push
+        run: nuget push .publish/*.nupkg -source "GPR" -SkipDuplicate
