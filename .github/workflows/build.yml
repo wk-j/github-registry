@@ -1,0 +1,28 @@
+name: Build & Publish nuget package
+
+on:
+  push:
+    branches:
+      - master
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v1
+      - name: Setup .NET Core
+        uses: actions/setup-dotnet@v1
+        with:
+          dotnet-version: 3.0.100
+
+      - name: Build with dotnet
+        run: |
+          dotnet tool install -g cake.tool
+          dotnet cake -target=Pack
+
+      - name: Setup nuget config
+        run: sed 's/GITHUB_TOKEN/${{ secrets.GITHUB_TOKEN }}/g' .nuget.config > nuget.config
+
+      - name: Publish nuget
+        run: dotnet nuget push .publish/*.nupkg -s "github"

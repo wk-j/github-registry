@@ -25,3 +25,8 @@ dotnet nuget push \
 
 cat ~/.config/NuGet/NuGet.Config
 ```
+
+## Resource
+
+- https://github.community/t5/GitHub-API-Development-and/github-package-registry-not-compatible-with-dotnet-nuget-client/td-p/34776
+- https://github.com/NuGet/Home/issues/8580
