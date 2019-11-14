@@ -11,10 +11,6 @@ jobs:
 
     steps:
       - uses: actions/checkout@v1
-      # - name: Setup .NET Core
-      #   uses: actions/setup-dotnet@v1
-      #   with:
-      #     dotnet-version: 3.0.100
 
       - name: Build with dotnet
         run: |
@@ -38,7 +34,7 @@ jobs:
     needs: build
 
     steps:
-      - uses: actions/checkout@v1
+      # - uses: actions/checkout@v1
 
       - name: Download math result for job 1
         uses: actions/download-artifact@v1
@@ -52,5 +48,5 @@ jobs:
       - name: Add GPR Source using nuget.exe
         run: nuget sources add -name "GPR" -Source https://nuget.pkg.github.com/wk-j/index.json -Username wk-j -Password ${{ secrets.GITHUB_TOKEN }}
 
-      - name: nuget push
-        run: nuget push .publish/**/*.nupkg -source "GPR" -SkipDuplicate
+      - name: NuGet push
+        run: nuget push .publish/**/*.nupkg -Source "GPR" -SkipDuplicate
