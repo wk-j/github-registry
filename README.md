@@ -12,24 +12,25 @@ nuget source Add -Name GitHub \
     -Password $GITHUB_TOKEN
 
 dotnet pack src/MyConsole/MyConsole.fsproj --output .publish
+dotnet pack src/MyLibrary/MyLibrary.csproj --output .publish
+dotnet pack src/NuGetPackages/NuGetPackages.csproj --output .publish
 
 nuget push \
     -Source GitHub \
-    .publish/wk.MyConsole.0.1.0.nupkg
+    .publish/nuget-packages.1.0.0.nupkg
+
+nuget push \
+    -Source GitHub \
+    .publish/wk.MyLibrary.1.0.0.nupkg
 
 dotnet nuget push \
     --source https://nuget.pkg.github.com/wk-j/index.json \
     --api-key $GITHUB_TOKEN \
     (find . -name "MyConsole*.nupkg")
 
-dotnet nuget push \
-    --source https://nuget.pkg.github.com/wk-j/index.json \
-    --api-key $GITHUB_TOKEN \
-    .publish/MyConsole.19.11.14.1332.nupkg
-
 cat ~/.config/NuGet/NuGet.Config
 
-curl -vX PUT -u wk-j:$GITHUB_TOKEN -F package=@(find . -name "MyConsole*.nupkg") https://nuget.pkg.github.com/wk-j
+curl -vX PUT -u wk-j:$GITHUB_TOKEN -F package=@.publish/wk.MyLibrary.1.0.0.nupkg https://nuget.pkg.github.com/wk-j
 
 ```
 
@@ -37,3 +38,4 @@ curl -vX PUT -u wk-j:$GITHUB_TOKEN -F package=@(find . -name "MyConsole*.nupkg")
 
 - https://github.community/t5/GitHub-API-Development-and/github-package-registry-not-compatible-with-dotnet-nuget-client/td-p/34776
 - https://github.com/NuGet/Home/issues/8580
+- https://github.com/NuGet/Home/issues/5972
