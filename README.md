@@ -15,7 +15,7 @@ dotnet pack src/MyConsole/MyConsole.fsproj --output .publish
 
 nuget push \
     -Source GitHub \
-    .publish/MyConsole.0.1.0.nupkg
+    .publish/wk.MyConsole.0.1.0.nupkg
 
 dotnet nuget push \
     --source https://nuget.pkg.github.com/wk-j/index.json \
