@@ -2,7 +2,7 @@
 
 [![Actions](https://github.com/wk-j/github-registry/workflows/Build/badge.svg)](https://github.com/wk-j/github-registry/actions)
 
-```
+```bash
 nuget source Remove -Name wk-j
 nuget source Remove -Name GitHub
 
@@ -15,6 +15,9 @@ dotnet pack src/MyConsole/MyConsole.fsproj --output .publish
 dotnet pack src/MyLibrary/MyLibrary.csproj --output .publish
 dotnet pack src/NuGetPackages/NuGetPackages.csproj --output .publish
 
+# Package deletion from the command line is disabled in GitHub Package Registry
+nuget delete nuget-packages 1.0.0 -Source GitHub
+
 nuget push \
     -Source GitHub \
     .publish/nuget-packages.1.0.0.nupkg
@@ -23,15 +26,7 @@ nuget push \
     -Source GitHub \
     .publish/wk.MyLibrary.1.0.0.nupkg
 
-dotnet nuget push \
-    --source https://nuget.pkg.github.com/wk-j/index.json \
-    --api-key $GITHUB_TOKEN \
-    (find . -name "MyConsole*.nupkg")
-
 cat ~/.config/NuGet/NuGet.Config
-
-curl -vX PUT -u wk-j:$GITHUB_TOKEN -F package=@.publish/wk.MyLibrary.1.0.0.nupkg https://nuget.pkg.github.com/wk-j
-
 ```
 
 ## Issues

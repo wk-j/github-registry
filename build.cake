@@ -5,10 +5,10 @@ using PS = StartProcess.Processor;
 using ProjectParser;
 
 var nugetToken = EnvironmentVariable("GITHUB_TOKEN");
-var name = "MyConsole";
+var name = "MyLibrary";
 
 var currentDir = new DirectoryInfo(".").FullName;
-var info = Parser.Parse($"src/{name}/{name}.fsproj");
+var info = Parser.Parse($"src/{name}/{name}.csproj");
 var publishDir = ".publish";
 var version = DateTime.Now.ToString("yy.MM.dd.HHmm");
 
