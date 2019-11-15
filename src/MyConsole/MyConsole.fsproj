@@ -5,6 +5,8 @@
         <TargetFramework>netcoreapp3.0</TargetFramework>
         <PackageId>wk.MyConsole</PackageId>
         <Version>0.1.0</Version>
+        <RepositoryUrl>https://github.com/wk-j/nuget-packages.git</RepositoryUrl>
+        <RepositoryType>git</RepositoryType>
     </PropertyGroup>
 
     <ItemGroup>
