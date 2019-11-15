@@ -11,9 +11,11 @@ nuget source Add -Name GitHub \
     -UserName wk-j \
     -Password $GITHUB_TOKEN
 
+dotnet pack src/MyConsole/MyConsole.fsproj --output .publish
+
 nuget push \
     -Source GitHub \
-    (find . -name "MyConsole*.nupkg")
+    .publish/MyConsole.0.1.0.nupkg
 
 dotnet nuget push \
     --source https://nuget.pkg.github.com/wk-j/index.json \
@@ -23,11 +25,12 @@ dotnet nuget push \
 dotnet nuget push \
     --source https://nuget.pkg.github.com/wk-j/index.json \
     --api-key $GITHUB_TOKEN \
-    .publish/MyConsole.19.11.14.1245.nupkg
+    .publish/MyConsole.19.11.14.1332.nupkg
 
 cat ~/.config/NuGet/NuGet.Config
 
 curl -vX PUT -u wk-j:$GITHUB_TOKEN -F package=@(find . -name "MyConsole*.nupkg") https://nuget.pkg.github.com/wk-j
+
 ```
 
 ## Issues
